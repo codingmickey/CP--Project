@@ -3,9 +3,9 @@
 struct Book
 {
     char nameOfBook[50];
-    int numberOfCopies = 2;
+    int numberOfCopies;
     char description[200];
-    int bookTaken = 0;
+    int bookTaken;
 };
 
 int main()
@@ -25,6 +25,8 @@ int main()
 
     for (int i = 0; i < 5; i++)
     {
+        Library[i].numberOfCopies = 2;
+        Library[i].bookTaken = 0;
         strcpy(Library[i].nameOfBook, bookNames[i]);
         strcpy(Library[i].description, bookDescription[i]);
     }
