@@ -26,15 +26,15 @@ void setTimeOut(int n)
 int main()
 {
     int fine = 0;
-    struct Book Library[5];
+    struct Book Library[7];
     char bookNames[7][50] = {
         "Concept of Physics Part-1",
-        "2. Concept of Physics Part-2",
-        "3. Gulliver's Travels",
-        "4. Oliver Twist",
-        "5. Encyclopedias",
-        "6. Harry Potter series",
-        "7. THE SECRET"};
+        "Concept of Physics Part-2",
+        "Gulliver's Travels",
+        "Oliver Twist",
+        "Encyclopedias",
+        "Harry Potter series",
+        "THE SECRET"};
     char bookDescription[7][300] = {
         "H C Verma s Concepts Of Physics is an all-inclusive book, which serves to detail out the ABC of physics",
         "H C Verma s Concepts Of Physics is an all-inclusive book, which serves to detail out the ABC of physics",
@@ -47,7 +47,7 @@ int main()
     char onceAgain;
     char dummy;
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 7; i++)
     {
         Library[i].numberOfCopies = 2;
         Library[i].bookTaken = 0;
@@ -57,25 +57,25 @@ int main()
     do
     {
         setTimeOut(0.5);
-        printf("\nWelcome to the library\n\n");
+        printf("\nWelcome to the library\n\n\n");
         setTimeOut(1.5);
-        printf("Books Present in the Library: \n");
-        for (int i = 0; i < 5; i++)
+        printf("Books Present in the Library: \n\n");
+        for (int i = 0; i < 7; i++)
         {
             printf("%d. %s\n", i + 1, Library[i].nameOfBook);
             printf("Description: %s\n", Library[i].description);
-            setTimeOut(1.5);
+            setTimeOut(1);
         }
         setTimeOut(1.5);
         printf("\nWhat do you want to do?\n");
         setTimeOut(1.5);
-        printf("1. Issue a book\n2. Return a book\n3. Show fine\nEnter the number(1/2/3): ");
+        printf("1. Issue a book\n2. Show Issued Books\n3. Return a book\n4. Show fine\nEnter the number(1/2/3/4): ");
         scanf("%d", &taskNumber);
         if (taskNumber == 1)
         {
             int temp;
-            printf("\nWhich book do you want to issue?\n");
-            for (int i = 0; i < 5; i++)
+            printf("\nWhich book do you want to issue?\n\n");
+            for (int i = 0; i < 7; i++)
             {
                 printf("%d. %s\n", i + 1, Library[i].nameOfBook);
                 printf("Count: %d\n", Library[i].numberOfCopies);
@@ -90,18 +90,41 @@ int main()
             else
             {
                 (Library[temp].numberOfCopies)--;
-                printf("\nCopy Issued!\nNow only %d number of copies avaliable of that book.\n\n", Library[temp].numberOfCopies);
+                printf("\nCopy Issued!\n");
+                if (Library[temp].numberOfCopies == 1)
+                {
+                    printf("Now only 1 copy avaliable of that book.\n\n");
+                }
+                else
+                {
+                    printf("Now only %d copies avaliable of that book.\n\n", Library[temp].numberOfCopies);
+                }
                 Library[temp].bookTaken++;
                 bookTaken++;
             }
         }
         else if (taskNumber == 2 && bookTaken > 0)
         {
+            printf("\nCurrently Issued Books \t\t Remaining Copies\n");
+            for (int i = 0; i < 7; i++)
+            {
+                if (Library[i].bookTaken > 0)
+                {
+                    printf("%d. %s \t\t %d\n", i + 1, Library[i].nameOfBook, Library[i].numberOfCopies);
+                }
+            }
+            printf("\n");
+        }
+        else if (taskNumber == 3 && bookTaken > 0)
+        {
             int bookNumber, numberOfDays;
             printf("\nWhich book do you want to return?\n");
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 7; i++)
             {
-                printf("%d. %s\n", i + 1, Library[i].nameOfBook);
+                if (Library[i].bookTaken > 0)
+                {
+                    printf("%d. %s\n", i + 1, Library[i].nameOfBook);
+                }
             }
             printf("\nEnter the book number: ");
             scanf("%d", &bookNumber);
@@ -113,11 +136,18 @@ int main()
                 if (numberOfDays > 7)
                 {
                     int tempFine = (numberOfDays - 7) * 10;
-                    printf("You have a fine Rs. %d (Regarding this book), which is added to the total fine of %d", tempFine, fine);
+                    printf("\nYou have a fine Rs. %d (Regarding this book), which is added to the total fine of Rs.%d", tempFine, fine);
                     fine += tempFine;
                 }
                 (Library[bookNumber].numberOfCopies)++;
-                printf("\nBook Returned!\nNow %d copies avaliable of that book.\n\n", Library[bookNumber].numberOfCopies);
+                if (Library[bookNumber].numberOfCopies == 1)
+                {
+                    printf("\nNow only 1 copy avaliable of that book.");
+                }
+                else
+                {
+                    printf("\nBook Returned!\nNow %d copies avaliable of that book.\n\n", Library[bookNumber].numberOfCopies);
+                }
                 bookTaken--;
                 Library[bookNumber].bookTaken--;
             }
@@ -126,11 +156,11 @@ int main()
                 printf("\nFirst Issue that book then return lol.\n\n");
             }
         }
-        else if (taskNumber == 2 && !bookTaken)
+        else if ((taskNumber == 3 || taskNumber == 2) && !bookTaken)
         {
-            printf("\nFirst Issue a book!\n\n");
+            printf("\nFirst Issue a book!!\n\n");
         }
-        else if (taskNumber == 3)
+        else if (taskNumber == 4)
         {
             printf("\nYou have a total fine of Rs.%d\n\n", fine);
         }
